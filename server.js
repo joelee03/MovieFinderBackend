@@ -9,3 +9,4 @@ app.use("/api/v1/reviews", reviews)
 app.use("*", (req, res) => res.status(404).jason({error: "not found"}))
 
 export default app
+
