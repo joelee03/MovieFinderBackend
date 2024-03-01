@@ -28,4 +28,50 @@ export default class ReviewsDAO {
             return { error: e }
         }
     }
+
+    static async getReview(reviewId) {
+        try {
+            return await reviews.findOne({_id: ObjectId(reviewId)})
+        } catch (e) {
+            console.error(`Uable to get review: ${e}`)
+            return { error: e }
+        }
+    }
+
+    static async updateReview(reviewId, user, review) {
+        try{
+            const updateResponse = await reviews.updateOne(
+                {_id: ObjectId(reviewId)},
+                { $set: {user: user, rewview: review}}
+            )
+            return updateResponse
+        } catch (e) {
+            console.error(`Uable to update review: ${e}`)
+            return { error: e }
+        }
+    }
+
+    static async deleteReview(reviewId) {
+        try{
+            const deleteReponse = await reviews.deleteOne(
+                {_id: ObjectId(reviewId)}
+            )
+            return deleteReponse
+        } catch (e) {
+            console.error(`Uable to delete review: ${e}`)
+            return { error: e }
+        }
+    }
+
+    static async getReviewsByMovieId(movieId) {
+        try{
+            const cursor = await reviews.find(
+                {movieId: parseInt(movieId)}
+            )
+            return cursor.toArray()
+        } catch (e) {
+            console.error(`Uable to get review: ${e}`)
+            return { error: e }
+        }
+    }
 }
